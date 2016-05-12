@@ -1,0 +1,96 @@
+<html ng-app="myApp">
+    <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css?v=1"/>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700" rel="stylesheet" type="text/css">
+    <title>Vote Against</title>
+    </head>
+    <body>
+    <!-- <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '547315135440298',
+          xfbml      : true,
+          version    : 'v2.6'
+        });
+         FB.getLoginStatus(function(response) {
+          if (response.status === 'connected') {
+            console.log('Logged in.');
+          }
+          else {
+            FB.login();
+          }
+        });
+
+      };
+      (function(d, s, id){
+        FB = null;
+        var js, fjs = d.getElementsByTagName(s)[0];
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+      
+    </script> -->
+
+   <div id="navbar" class="navbar navbar-default navbar-margin ng-scope" ng-controller="postingCtrl">
+    <div id="navbar-container" class="container">
+            <a class="col-xs-12 navbar-brand" href="http://ivoteagainst.com">
+                <small>
+                <i class="glyphicon glyphicon-hand-right"></i>
+                I Vote Against
+                </small>
+            </a> 
+         
+            <div role="navigation">
+                <span class=" col-xs-1 glyphicon glyphicon-volume-up icon-nav"></span>
+                <input type="textbox" placeholder="Add post or search existing posts" ng-change="against_change()" ng-model="against" id="against" class="col-xs-12 navbar-margin ng-valid ng-dirty">
+                <input type="textbox" class="navbar-margin col-xs-12 ng-valid ng-dirty ng-pristine" id="tag" ng-model="tags" ng-change="tags_change()" placeholder="Add tags or search posts by tags" >
+                <div ng-show="against" >
+                    <div ng-repeat="desc in descs" >
+                      <span class=" col-xs-1 glyphicon glyphicon-remove-circle  icon-nav" ng-click="desc_del($index)" ></span>
+            		  <input type="textbox" class="col-xs-12 navbar-margin ng-valid ng-dirty" ng-model="descs[$index].val" ng-focus="desc_add(descs[$index].val, $index)" placeholder="Explain why do you vote against? Add your arguments here.">
+                    </div>
+                    <button ng-click="addPost();" class="col-xs-12 btn btn-sm btn-danger nav-button-margin"> <i class="glyphicon glyphicon-book"></i>&nbsp;POST</button>
+                </div>
+                <div class="navbar-text">
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="row">
+    	<div class="container">
+    		<div class="col-sm-9">
+	  			<div>              
+					<ul ng-controller="votingCtrl" class="thumbnails" >
+					    <li ng-repeat="post in posts | filter:against| filter:tags | limitTo:5" class="clearfix" >
+					        
+					        <div class="well col-xs-10">
+					            <h4><a href="{{post.url}}">{{post.title}}</a></h4>
+					            <p>{{post.description}}</p>     
+					           <div class="votingButton" ng-click="upVote(post);">
+					                <i class="glyphicon glyphicon-chevron-up"></i>
+					            </div>
+					            <div class="badge badge-inverse">
+					                <div>{{post.votes}}</div>
+					            </div>
+					            </div>
+					            <div class="col-xs-2 voting well">
+					                <span fb-like="post.url"></span>
+                                     <span>{{post.tags}}</span>
+					            </div>
+                              
+					        </div>
+					    </li>
+					</ul>
+                </div>
+    		</div>
+    	</div>
+    </div>
+    	
+	<script src="js/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<script src="app/angulike.js"></script>
+	<script src="app/app.js?v=1"></script>
+</body>
+</html>
